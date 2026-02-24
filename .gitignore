@@ -1,7 +1,12 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ==============================================================================
+# Proyecto Mabe - Cambus Interface (.gitignore Extendido para Next.js / Node.js)
+# Generado por el Experto DevOps Autónomo
+# ==============================================================================
 
-# dependencies
-/node_modules
+# ------------------------------------------------------------------------------
+# 1. DEPENDENCIAS (Node.js & Gestores de Paquetes)
+# ------------------------------------------------------------------------------
+/node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -10,32 +15,96 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# ------------------------------------------------------------------------------
+# 2. FRAMEWORK NEXT.JS (Entornos de ejecución y builds)
+# ------------------------------------------------------------------------------
+# Next.js genera su propia carpeta de build
 /.next/
 /out/
+/build/
+/dist/
 
-# production
-/build
+# Tipados autogenerados por Next.js para el entorno (Recomendados ignorar ya que se reconstruyen)
+next-env.d.ts
+.next-env.d.ts
 
-# misc
-.DS_Store
+# ------------------------------------------------------------------------------
+# 3. VARIABLES DE ENTORNO Y SECRETOS (¡CRÍTICO PARA SEGURIDAD!)
+# ------------------------------------------------------------------------------
+# NUNCA subir archivos .env al repositorio, excepto plantillas de ejemplo (.env.example)
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.local.example
+
+# Claves PEM, certificados y otras llaves
 *.pem
+*.key
+*.cert
+*.crt
+*_rsa
+*_rsa.pub
 
-# debug
+# ------------------------------------------------------------------------------
+# 4. LOGS DEBUGGING Y DIAGNÓSTICOS
+# ------------------------------------------------------------------------------
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+lerna-debug.log*
+build_output*.log
+# Ocultar cualquier .log general (excepto documentaciones específicas si las hubiera)
+*.log
 
-# env files (can opt-in for committing if needed)
-.env*
+# ------------------------------------------------------------------------------
+# 5. CACHÉS, TESTS Y HERRAMIENTAS DE LINTING
+# ------------------------------------------------------------------------------
+# Next.js Cache
+/.next/cache/
 
-# vercel
-.vercel
+# ESLint & Prettier
+.eslintcache
+.prettiercache
 
-# typescript
+# TypeScript
 *.tsbuildinfo
-next-env.d.ts
+
+# Pruebas & Cobertura (Jest, Cypress, Playwright, etc.)
+/coverage/
+.nyc_output/
+/playwright-report/
+/test-results/
+
+# ------------------------------------------------------------------------------
+# 6. PLATAFORMAS DE DESPLIEGUE (Vercel, AWS, etc.)
+# ------------------------------------------------------------------------------
+.vercel/
+.serverless/
+.netlify/
+
+# ------------------------------------------------------------------------------
+# 7. SISTEMA OPERATIVO Y HERRAMIENTAS DE DESARROLLO (IDEs)
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio Code / IntelliJ / JetBrains
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
