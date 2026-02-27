@@ -29,6 +29,13 @@ export async function GET() {
       ORDER BY numero_anden ASC
     `);
 
+        // 4. Get total movements for today
+        const todayStats = await client.query(`
+      SELECT COUNT(*) as total 
+      FROM registros_vehiculos 
+      WHERE DATE(fecha_hora_entrada) = CURRENT_DATE
+    `);
+
         client.release();
 
         return NextResponse.json({
@@ -36,6 +43,7 @@ export async function GET() {
             data: {
                 recentActivity: vehiclesResult.rows,
                 cameras: camerasResult.rows,
+                registrosHoy: parseInt(todayStats.rows[0].total, 10),
                 andenes: andenesResult.rows.map(row => ({
                     id_anden: row.numero_anden, // Re-map ID to match UI expectation
                     numero_anden: row.numero_anden,

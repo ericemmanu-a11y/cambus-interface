@@ -4,7 +4,6 @@
 -- =============================================
 
 -- CREAR LA BASE DE DATOS Y CONECTARSE
--- (Si ejecutas en pgAdmin, quizás debas correr esto separado o conectarte manual)
 -- DROP DATABASE IF EXISTS cambus_db;
 -- CREATE DATABASE cambus_db;
 -- \c cambus_db;
@@ -94,6 +93,22 @@ CREATE TABLE bitacora_acciones (
     fecha_hora  TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE incidencias (
+    id_incidencia SERIAL PRIMARY KEY,
+    id_usuario INTEGER REFERENCES usuarios(id_usuario),
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT NOT NULL,
+    nivel_gravedad VARCHAR(20) DEFAULT 'media' CHECK (nivel_gravedad IN ('baja', 'media', 'alta', 'critica')),
+    estado VARCHAR(20) DEFAULT 'abierta' CHECK (estado IN ('abierta', 'en_progreso', 'resuelta')),
+    fecha_reporte TIMESTAMPTZ DEFAULT NOW(),
+    fecha_resolucion TIMESTAMPTZ
+);
+
+CREATE TABLE estado_simulador (
+    id INTEGER PRIMARY KEY,
+    ultimo_latido TIMESTAMPTZ NOT NULL
+);
+
 -- =========================================================
 -- SECCIÓN 3: ÍNDICES OPTIMIZADOS
 -- =========================================================
@@ -130,12 +145,16 @@ $do$;
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO cambus_admin;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO cambus_admin;
+GRANT CREATE ON SCHEMA public TO cambus_admin;
 
-GRANT SELECT, INSERT ON registros_vehiculos TO cambus_supervisor;
+GRANT SELECT, INSERT, UPDATE ON registros_vehiculos TO cambus_supervisor;
 GRANT SELECT ON andenes, camaras, usuarios TO cambus_supervisor;
+GRANT SELECT, INSERT, UPDATE ON incidencias TO cambus_supervisor;
+GRANT SELECT, INSERT, UPDATE, DELETE ON estado_simulador TO cambus_supervisor;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO cambus_supervisor;
 
 GRANT SELECT ON andenes, camaras TO cambus_operador;
+GRANT SELECT, INSERT, UPDATE, DELETE ON estado_simulador TO cambus_operador;
 
 -- =========================================================
 -- SECCIÓN 5: TRIGGERS 

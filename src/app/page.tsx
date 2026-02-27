@@ -9,8 +9,17 @@ import {
   Activity,
   AlertTriangle,
   ArrowRight,
-  MonitorPlay
+  MonitorPlay,
+  Lock,
+  LogOut
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+interface UserData {
+  id: number;
+  rol: string;
+  nombre: string;
+}
 
 interface DashboardData {
   recentActivity: Array<{
@@ -32,11 +41,31 @@ interface DashboardData {
     estado_actual: string;
     zona: string;
   }>;
+  registrosHoy: number;
 }
 
 export default function Dashboard() {
+  const router = useRouter();
   const [data, setData] = useState<DashboardData | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        const res = await fetch('/api/auth/me');
+        const sessionJson = await res.json();
+        if (sessionJson.user) {
+          setUser(sessionJson.user);
+        } else {
+          router.push('/login');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    checkSession();
+  }, [router]);
 
   useEffect(() => {
     async function fetchData() {
@@ -84,9 +113,25 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700/50 backdrop-blur-sm">
-          <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-          <span className="text-sm font-medium text-slate-300">Sistema Activo</span>
+        <div className="flex items-center gap-4">
+          {user && (
+            <div className="text-right hidden sm:block">
+              <p className="text-sm font-bold text-slate-200">{user.nombre}</p>
+              <p className="text-[10px] font-mono text-blue-400 capitalize bg-blue-900/30 px-2 py-0.5 mt-1 rounded-full inline-block border border-blue-800">
+                ROL: {user.rol}
+              </p>
+            </div>
+          )}
+          <button
+            onClick={async () => {
+              await fetch('/api/auth/logout', { method: 'POST' });
+              router.push('/login');
+            }}
+            title="Cerrar Sesión Segura"
+            className="flex items-center justify-center p-3 bg-slate-800/80 hover:bg-red-950/60 rounded-full border border-slate-700/50 backdrop-blur-sm transition-colors text-slate-400 hover:text-red-400 hover:border-red-900/50"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
@@ -108,17 +153,17 @@ export default function Dashboard() {
         />
         <KPICard
           title="Registros Hoy"
-          value={data?.recentActivity.length.toString() || "0"}
+          value={data?.registrosHoy?.toString() || "0"}
           icon={<Activity className="w-6 h-6 text-rose-400" />}
           trend="Flujo normal"
           color="rose"
         />
         <KPICard
           title="Seguridad"
-          value="Óptima"
-          icon={<ShieldCheck className="w-6 h-6 text-amber-400" />}
-          trend="0 incidentes"
-          color="amber"
+          value={user?.rol === 'operador' ? "***" : "Óptima"}
+          icon={user?.rol === 'operador' ? <Lock className="w-6 h-6 text-slate-600" /> : <ShieldCheck className="w-6 h-6 text-amber-400" />}
+          trend={user?.rol === 'operador' ? "Acceso Restringido" : "0 incidentes"}
+          color={user?.rol === 'operador' ? 'slate' : 'amber'}
         />
       </div>
 
@@ -140,7 +185,7 @@ export default function Dashboard() {
               >
                 {/* Status Indicator Glow */}
                 <div className={`absolute -inset-1 opacity-20 blur-xl transition-opacity group-hover:opacity-40 ${anden.estado_actual === 'ocupado' ? 'bg-rose-500' :
-                    anden.estado_actual === 'libre' ? 'bg-emerald-500' : 'bg-amber-500'
+                  anden.estado_actual === 'libre' ? 'bg-emerald-500' : 'bg-amber-500'
                   }`}></div>
 
                 <span className="text-4xl font-black text-slate-300 relative z-10">
@@ -148,8 +193,8 @@ export default function Dashboard() {
                 </span>
 
                 <div className={`px-3 py-1 rounded-full text-xs font-semibold relative z-10 ${anden.estado_actual === 'ocupado' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' :
-                    anden.estado_actual === 'libre' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
-                      'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                  anden.estado_actual === 'libre' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                    'bg-amber-500/20 text-amber-400 border border-amber-500/30'
                   }`}>
                   {anden.estado_actual.toUpperCase()}
                 </div>
@@ -204,12 +249,13 @@ export default function Dashboard() {
   );
 }
 
-function KPICard({ title, value, icon, trend, color }: { title: string, value: string, icon: React.ReactNode, trend: string, color: 'blue' | 'emerald' | 'amber' | 'rose' }) {
+function KPICard({ title, value, icon, trend, color }: { title: string, value: string, icon: React.ReactNode, trend: string, color: 'blue' | 'emerald' | 'amber' | 'rose' | 'slate' }) {
   const colorMap = {
     blue: 'from-blue-500/20 to-transparent border-blue-500/30 text-blue-400',
     emerald: 'from-emerald-500/20 to-transparent border-emerald-500/30 text-emerald-400',
     amber: 'from-amber-500/20 to-transparent border-amber-500/30 text-amber-400',
     rose: 'from-rose-500/20 to-transparent border-rose-500/30 text-rose-400',
+    slate: 'from-slate-700/20 to-transparent border-slate-700/30 text-slate-500',
   };
 
   return (
