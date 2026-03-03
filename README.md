@@ -27,33 +27,20 @@ Sigue estos sencillos pasos para probar el proyecto localmente sin complicacione
 * Tener **Node.js** (versión 20 o superior) instalado.
 * Tener **PostgreSQL** (versión 16) instalado y estar ejecutándose localmente en el puerto `5432` con el usuario maestro por defecto (`postgres`).
 
-### 1. Inicialización de la Base de Datos
+### 1. Instalación y Despliegue en 1-Click (Nuevo Sistema Automático)
 
-Hemos encapsulado toda la estructura, usuarios y datos semilla en un único archivo. Abre **PgAdmin** (o la herramienta psql de terminal), conéctate a tu base de datos y ejecuta el siguiente script EN SU TOTALIDAD (puedes crear una base de datos temporal si gustas o correrla sobre la por defecto):
+Hemos encapsulado toda la estructura, creación de usuarios, inyección de base de datos, y levantamiento de servidores en un único archivo ejecutable inteligente. 
 
-1. Descarga/Copia el código local: Abre el archivo **`cambus_v2.sql`** ubicado en la raíz de este proyecto.
-2. Cópialo y ejecútalo mediante la consola Query o PgAdmin.
-   * *El script es autosuficiente: automáticamente creará la arquitectura, los 3 roles limitados de acceso, los triggers, las vistas y añadirá vehículos y andenes de prueba.*
+1. Abre la carpeta del código fuente de este proyecto.
+2. Haz doble click sobre el archivo **`setup.bat`** (Instalador Automático Windows).
+3. ¡No hagas nada más! El sistema automáticamente:
+   * Instalará las dependencias.
+   * Conectará a PostgreSQL para crear tu base de datos y tus andenes sin usar PgAdmin.
+   * Abrirá el Servidor Web Front-End.
+   * Abrirá el Motor Simulador de Eventos Logísticos de Cámaras.
+   * Te abrirá el navegador listo para entrar.
 
-### 2. Instalación del Entorno Frontend (Nuevo Sistema Rápido)
-
-Hemos añadido un script automatizado para la instalación de este servidor y su despliegue para producción:
-
-Abre la terminal de comandos (cmd o powershell) en la carpeta del código fuente de este proyecto:
-
-```bash
-# Ejecutar instalador automatizado
-.\setup.ps1
-```
-
-O si prefieres instalación manual (En caso de fallo de permisos en PS1):
-```bash
-# 1. Instalar las dependencias de React/Next.js
-npm install
-
-# 2. Iniciar el servidor web local para evaluación
-npm run dev
-```
+*(Nota: Solo asegúrate de tener PostgreSQL instalado en tu máquina corriendo con el puerto 5432 y contraseña local estándar).*
 
 ### 3. Uso de la Aplicación
 
