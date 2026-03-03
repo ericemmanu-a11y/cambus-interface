@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import { cookies } from 'next/headers';
 import { decrypt } from '@/lib/session';
 import Sidebar from '@/components/Sidebar';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   title: 'Cambus - Sistema de Control',
@@ -29,9 +30,9 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="es" className="dark">
-      <body className={`${inter.className} bg-slate-950 text-slate-50 min-h-screen selection:bg-blue-500/30`}>
-        <div className="flex h-screen overflow-hidden">
+    <html lang="es" className="dark scroll-smooth">
+      <body className={`${inter.variable} ${outfit.variable} font-sans bg-slate-950 text-slate-50 min-h-screen selection:bg-blue-500/30 overflow-hidden`}>
+        <div className="flex h-screen w-full relative">
           <Sidebar user={user} />
 
           {/* Main Content Area */}

@@ -1,0 +1,624 @@
+CAMBUS
+Monitoreo de E/S de camiones con cámara
+
+Aplicar
+tecnología
+visión
+artificial y manejo de Base
+de Datos para optimizar los
+procesos
+logísticos
+de
+carga
+y
+descarga,
+reduciendo
+tiempos
+muertos
+y
+mejorando
+el
+control operativo en tiempo
+real.
+Desarrollar un sistema de
+monitoreo
+de
+camiones
+mediante cámaras y visión
+artificial que permita regis-
+trar
+placas,
+tiempos
+de
+estancia y ocupación de
+puertas,
+apoyando
+la
+eficiencia operativa de la
+empresa sin requerir infra-
+estructura
+de
+red
+ni
+cableado existente.
+2
+
+Valores
+CamBus
+3
+
+Nuestro cliente
+El Centro de Distribución de Mabe en San Luis Potosí almacena en sus
+instalaciones más de 100,000 productos. Así mismo despacha productos a través
+de 100 andenes que funcionan 24 horas al día y los 7 días de la semana.
+El alto flujo de vehículos de carga hace indispensable contar con sistemas
+automatizados de control y registro vehicular, que mejore la eficiencia, seguridad
+y trazabilidad de sus procesos logísticos.
+Aunado a esto el CDR-SLP tiene dentro de sus metas a mediano plazo ser un
+referente en innovación en temas de logística y control de proceso.
+4
+
+Necesidades del cliente
+•
+Registrar las entradas y salidas de camiones en las puertas
+de carga y descarga.
+•
+Conocer el tiempo de permanencia de los camiones en cada
+puerta.
+•
+Visualizar el estado de las puertas de forma clara y en
+tiempo real.
+•
+Contar con información confiable y consultable sobre el
+flujo de camiones.
+•
+Restringir el acceso a la información a personal autorizado.
+Realizar un sistema automatizado usando visión artificial que
+logre:
+5
+
+Controlar
+los
+procesos
+de
+despacho,
+tiempo
+de
+embarque y uso de andenes. Comenzando por contar
+con una herramienta adecuada para medirlos.
+Aunado a lo anterior, la falta de información llega a
+generar retrasos en la operación y logística.
+Problemática
+6
+
+El proyecto tiene cabida para poder solventar los problemas de
+trazabilidad, tiempo de embarque y uso de las instalaciones.
+Es por esto que un sistema automatizado con visión artificial
+permitirá registrar vehículos en tiempo real, reduciendo errores
+y tiempos muertos sin requerir infraestructura de red ni
+cableado.
+Justificación
+7
+
+Objetivos
+Diseñar un sistema automatizado basado en visión artificial capaz de
+registrar automáticamente la entrada y salida de camiones en una planta
+industrial, garantizando trazabilidad, confiabilidad y eficiencia operativa.
+•
+Desarrollar un sistema para identificar y contabilizar el tiempo en un anden.
+•
+Implementar un sistema de captura de placas para la identificación de camiones.
+•
+Desarrollar un sistema de comunicación robusto.
+•
+Diseñar un sistema de almacenamiento de datos estructurado (registro digital en Excel).
+•
+Asegurar la operación continua y confiable del sistema en un entorno industrial.
+Objetivos generales
+8
+Objetivos Específicos
+
+Proceso
+9
+
+Impactos
+Tecnológico
+Social
+Económico
+Ambiental
+Mejora la organización del trabajo y
+la supervisión operativa.
+Reduce errores humanos y
+conflictos por tiempos de espera.
+Requiere capacitación inicial del
+personal.
+Reduce emisiones contaminantes al
+optimizar la permanencia de camiones.
+Disminuye consumo de combustible
+por menor tiempo en ralentí.
+Implica
+consumo
+eléctrico
+de
+los
+equipos.
+Impulsa
+la
+digitalización
+y
+automatización de procesos logísticos.
+Demuestra la viabilidad de sistemas
+autónomos sin red empresarial.
+Puede verse afectado por condiciones
+de iluminación o clima.
+Reduce
+tiempos
+muertos
+y
+costos
+operativos.
+Apoya la toma de decisiones con datos
+confiables.
+Requiere inversión inicial en hardware e
+instalación.
+
+Estado del arte
+Soluciones ANPR basadas 
+en cámaras inteligentes 
+para control de accesos 
+vehiculares. 
+Costo-beneficio.
+Fácil implementación y 
+reconocimiento de placas 
+en tiempo real.
+Plataforma empresarial 
+de reconocimiento de 
+placas y videovigilancia 
+para control vehicular.
+Alta precisión.
+Operación confiable 24/7 
+Integración total con 
+sistemas de seguridad.
+Software de reconocimiento 
+de placas basado
+en inteligencia artificial 
+compatible con múltiples 
+cámaras. 
+Destaca por su flexibilidad, 
+escalabilidad e integración 
+con sistemas externos, 
+permitiendo desarrollar 
+soluciones personalizadas 
+de monitoreo y análisis 
+vehicular.
+11
+
+Alternativas para 
+proyecto
+13
+
+Alternativa  1
+LoRaWAN
+PostgreSQL
+YOLO26 
+Dahua Bala 4mp
+01
+02
+04
+03
+Base de Datos
+Modelo de IA
+Protocolo de comunicación
+Cámara
+05
+Procesamiento
+Micro pc
+14
+
+Alternativa  2
+FHSS
+Maria DB
+RetinaNet
+Hikvision DS-2CD2085G1-I
+01
+02
+04
+03
+Base de Datos
+Modelo de IA
+Protocolo de comunicación
+Cámara
+05
+Procesamiento
+Jetson Nano
+15
+
+Alternativa  3
+WiFi
+Mongo DB
+Faster R-CNN
+Tp-Link Vigi C340
+01
+02
+04
+03
+Base de Datos
+Modelo de IA
+Protocolo de comunicación
+Cámara
+05
+Procesamiento
+Raspberry pi 5
+16
+
+•
+Control de accesos
+•
+Protección de la 
+información
+•
+Integridad de datos
+•
+Metodología de 
+desarrollo
+•
+Documentación
+•
+Validación del sistema
+Normativas
+•
+Licitud
+•
+Finalidad (solo control 
+logístico)
+•
+Proporcionalidad
+•
+Seguridad
+•
+Selección de cámaras
+•
+Calidad de imagen
+•
+Uso en seguridad y control
+•
+Ethernet y PoE
+•
+cámaras IP 
+alimentados por PoE
+•
+Software de procesamiento
+•
+Módulo de comunicación
+•
+Gestión de datos
+LFPDPPP
+ISO/IEC 27001
+IEC 62676
+IEEE 802.3 / 802.3bt
+ISO 9001 
+ISO/IEC 25010
+Z
+17
+
+Selección de alternativa
+La alternativa 1 fue seleccionada por su 
+alta confiabilidad en operación industrial 
+24/7. Integra PostgreSQL, LoRaWAN y 
+cámaras industriales, conformando una 
+arquitectura estable y escalable.
+LoRaWAN asegura comunicación 
+confiable a larga distancia, mientras que 
+YOLO permite la detección de placas en 
+tiempo real, logrando un equilibrio óptimo 
+entre procesamiento, comunicación y 
+almacenamiento.
+24
+
+•
+Sin uso de red empresarial
+ni cableado.
+•
+Uso
+exclusivo
+de
+office
+365.
+•
+Precisión
+afectada
+por
+condiciones ambientales.
+•
+Monitoreo de camiones mediante
+cámaras.
+•
+Identificación de placas y registro
+de tiempos.
+•
+Control
+de
+acceso
+mediante
+usuarios y contraseñas.
+•
+Registro de actividades realizadas
+por cada usuario.
+•
+Visualización en tiempo real por
+puerta.
+•
+Generación
+de
+reportes
+con
+información deseada.
+Limitaciones
+Alcances
+25
+
+Ergonomía
+Actualización y 
+optimización
+Uso de Inteligencia Artificial 
+para identificar los eventos de 
+entrada y salida de camiones, 
+permitiendo una rápida 
+interpretación en ambientes 
+industriales.
+Diseño de interfaz y 
+visualización
+Organización clara de la 
+información, horarios y 
+tiempos de estancia, 
+facilitando la supervisión 
+simultánea de múltiples 
+accesos.
+Legibilidad y 
+uso continuo
+Empleo de tipografías legibles para 
+garantizar la correcta lectura de 
+datos críticos durante turnos 
+prolongados, minimizando errores 
+operativos.
+26
+
+Costos de desarrollo
+27
+No Cantidad Unidad
+Descripción 
+Costo unitario
+Costo total
+1
+2
+Pz
+Micro PC
+$14,000.00
+$28,000.00
+2
+2
+Pz
+Nodo LoRaWAN USB (Dragino LA66)
+$780.00
+$1,560.00
+3
+1
+Pz
+Gateway LoRaWAN Industrial (8 canales)
+$8,840.00
+$8,840.00
+4
+7
+Pz
+Antena Externa 915MHz
+$689.00
+$4,823.00
+5
+7
+Pz
+Cable Pigtail
+$150.00
+$1,050.00
+6
+50
+Pz
+DH-IPC-B1E40
+$900.00
+$45,000.00
+7
+1
+Rollo 
+Bobinas de Cable UTP Cat6 Exterior
+$3,500.00
+$3,500.00
+8
+1
+Paquete
+Conectores RJ45 Blindados
+$600.00
+$600.00
+Total:
+$29,459.00
+$93,373.00
+
+Protocolo de pruebas
+1° Registro automático de entrada y salida
+de camiones sin errores en la base de datos.
+2° Captura y almacenamiento correcto de
+fecha, hora, cámara y evento en cada
+detección.
+3° Visualización en tiempo real del estado de
+accesos (ocupado / libre) sin retrasos.
+4° Funcionamiento simultáneo de múltiples
+cámaras sin pérdida de información.
+5°
+Restricción
+de
+edición
+a
+usuarios
+autorizados, manteniendo la integridad de
+los registros.
+31
+
+32
+[1] D. Gupta, B. Khan y A. Agarwal, “License plate recognition: A brief overview,” IJRASET Journal for Research in Applied Science and Engineering
+Technology, 2023. [En línea]. Disponible en: https://doi.org/10.22214/ijraset.2023.56644
+[2] D. Goyal, D. Jain y R. Malhotra, “Automatic Number Plate Recognition System using ML/AI,” IJRASET Journal for Research in Applied Science and
+Engineering Technology, 2025. [En línea]. Disponible en: https://doi.org/10.22214/ijraset.2025.71268
+[3] S. Joshi, P. Jejure, C. Jadhav y V. Jankar, “Automatic Number Plate Recognition,” International Journal of Scientific Research in Science and Technology,
+2024. [En línea]. Disponible en: https://doi.org/10.32628/IJSRST2411476
+[4] H. L. H. Velásquez, D. O. Ancalle Yucra, F. Guzmán Gonzales y M. A. Gonzales Casanova, “Sistema de visión por computador para el
+reconocimiento y lectura de placas vehiculares,” en JAIIO –JornadasArgentinasde Informática, 2024.
+[5] P. Prasetyawan, M. A. Cahya Aulia, N. S. Utami y U. A. Ramadhani, “Automatic License Plate Recognition (ALPRON) Using Optical Character
+Recognition Method,” Journal of Applied Informaticsand Computing, 2023. [En línea]. Disponible en: https://doi.org/10.30871/jaic.v9i3.9903
+[6]
+“Recognition,”
+IJRASET
+Journal
+for
+Research
+in
+Applied
+Science
+and
+Engineering
+Technology,
+2023.
+[En
+línea].
+Disponible
+en:
+https://doi.org/10.22214/ijraset.2023.48785
+[7] X. Zhou et al., “Advanced deep learning techniques for automated license plate recognition,” Scientific Reports, 2025. [En línea]. Disponible en:
+https://doi.org/10.1038/s41598-025-24967-9
+[8] S. Singh, S. Gupta y H. L. Mandoria, “A review paper on Automatic Number Plate Recognition System,” International Journal of Scientific Research in
+Computer Science and Information Technology, 2023. [En línea]. Disponible en: https://doi.org/10.32628/CSEIT2063208
+[9] A. L. Huanacuni y D. Aracena-Pizarro, “Detección y reconocimiento de placas patentes utilizando la arquitectura SSD: Un enfoque basado en
+redes neuronales convolucionales,” Ingeniare. Revista Chilena de Ingeniería, 2025. [En línea]. Disponible en: https://doi.org/10.64966/ingeniare.v33.13
+[10] C. Lee y H. Kim, “Implementation of number plate detection system for vehicle registration using IoT and recognition using CNN,” Measurement:
+Sensors, vol. 27, p. 100761, 2023. [En línea]. Disponible en: https://doi.org/10.1016/j.measen.2023.100761
+Referencias
+
+Anexos
+34
+
+Matriz de selección: Base de datos
+Matriz de selección: Base de datos
+MariaDB
+PostgreSQL
+MongoDB
+Criterio
+Peso
+Calificación
+Eval.
+Ponderada
+Calificación
+Eval. Ponderada
+Calificación
+Eval. Ponderada
+Operación local
+20%
+5
+1.0
+5
+1.0
+5
+1.0
+Facilidad de 
+integración
+20%
+4
+0.8
+3
+0.6
+4
+0.8
+Escalabilidad
+20%
+4
+0.8
+5
+1.0
+3
+0.6
+Volumen de 
+datos
+15%
+4
+0.6
+5
+0.75
+3
+0.45
+Concurrencia
+15%
+4
+0.6
+5
+0.75
+4
+0.6
+Nivel industrial
+10%
+4
+0.4
+5
+0.5
+3
+0.3
+Total
+100%
+4.20
+4.60
+3.75
+37
+
+Matriz de selección: Base de datos
+MariaDB
+PostgreSQL
+MongoDB
+Criterio
+Peso
+Eval. Ponderada
+Eval. Ponderada
+Eval. Ponderada
+Operación local
+20%
+1.0
+1.0
+1.0
+Facilidad de 
+integración
+20%
+0.8
+0.6
+0.8
+Escalabilidad
+20%
+0.8
+1.0
+0.6
+Volumen de datos
+15%
+0.6
+0.75
+0.45
+Concurrencia
+15%
+0.6
+0.75
+0.6
+Nivel industrial
+10%
+0.4
+0.5
+0.3
+Total
+100%
+4.20
+4.60
+3.75
+Matriz de selección: Base de datos
+42
+

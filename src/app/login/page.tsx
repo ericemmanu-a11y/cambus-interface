@@ -49,11 +49,12 @@ export default function LoginPage() {
 
             <div className="w-full max-w-md relative z-10">
                 <div className="text-center mb-10">
-                    <div className="inline-flex items-center justify-center p-4 bg-slate-900/80 border border-slate-800 rounded-2xl mb-6 shadow-2xl backdrop-blur-sm">
-                        <ShieldCheck className="w-12 h-12 text-blue-500" />
+                    <div className="inline-flex items-center justify-center p-2 bg-white border border-slate-700 rounded-2xl mb-6 shadow-xl w-24 h-24 overflow-hidden shadow-blue-500/10">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src="/logo.png" alt="CamBus Logo" className="w-full h-full object-contain" />
                     </div>
-                    <h1 className="text-4xl font-extrabold tracking-tight mb-2">CamBus <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400"> Login</span></h1>
-                    <p className="text-slate-400 text-sm">Autenticación Segura IoT Logística</p>
+                    <h1 className="text-4xl font-extrabold tracking-tight mb-2">CamBus <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400"> Logistics</span></h1>
+                    <p className="text-slate-400 text-sm font-semibold">Autenticación Segura IoT</p>
                 </div>
 
                 <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">

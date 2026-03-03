@@ -21,9 +21,12 @@ export default function Sidebar({ user }: { user: any }) {
   return (
     <aside className="w-64 border-r border-slate-800/60 bg-slate-900/40 flex flex-col backdrop-blur-xl">
       <div className="p-6">
-        <div className="flex items-center gap-2 mb-2">
-          <Truck className="w-6 h-6 text-blue-500" />
-          <h2 className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">CamBus</h2>
+        <div className="flex items-center gap-3 mb-4 border-b border-slate-800/60 pb-5">
+          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-1 shadow-[0_0_15px_rgba(59,130,246,0.15)] flex-shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="CamBus Logo" className="w-full h-full object-contain" />
+          </div>
+          <h2 className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-sans">CamBus</h2>
         </div>
         {user && <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full uppercase tracking-wider border border-slate-700">{user.rol}</span>}
       </div>

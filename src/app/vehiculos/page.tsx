@@ -18,7 +18,7 @@ export default function VehiculosPage() {
     const [registros, setRegistros] = useState<VehiculoRow[]>([]);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<any>(null);
-    const [andenesDisponibles, setAndenesDisponibles] = useState<number[]>([1, 2, 3, 4, 5]); // Simulado
+    const [andenesDisponibles, setAndenesDisponibles] = useState<number[]>([]); // Se cargará dinámicamente desde la BD
 
     const [showModal, setShowModal] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -34,6 +34,14 @@ export default function VehiculosPage() {
             .then(res => res.json())
             .then(data => {
                 if (data.user) setUser(data.user);
+            });
+
+        fetch('/api/dashboard')
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.data.andenes) {
+                    setAndenesDisponibles(data.data.andenes.map((a: any) => a.id_anden).sort((a: number, b: number) => a - b));
+                }
             });
 
         fetchRegistros();
@@ -54,7 +62,8 @@ export default function VehiculosPage() {
     };
 
     const openAddModal = () => {
-        setFormData({ id_registro: 0, placa: '', id_anden: 1, evento: 'entrada' });
+        const fallbackAnden = andenesDisponibles.length > 0 ? andenesDisponibles[0] : 1;
+        setFormData({ id_registro: 0, placa: '', id_anden: fallbackAnden, evento: 'entrada' });
         setIsEditing(false);
         setShowModal(true);
     };
@@ -142,10 +151,10 @@ export default function VehiculosPage() {
                 <div>
                     <h1 className="text-3xl font-extrabold tracking-tight flex items-center gap-3">
                         <Truck className="w-8 h-8 text-blue-400" />
-                        Registro de <span className="text-blue-400">Vehículos / Placas</span>
+                        Registro de <span className="text-blue-400">Flujo de Vehículos</span>
                     </h1>
                     <p className="text-slate-400 mt-2 text-md">
-                        Histórico detallado, edición y registro manual de eventos LPR.
+                        Gestión concurrente, edición y registro de vehículos en patio activo.
                     </p>
                 </div>
 
@@ -163,8 +172,8 @@ export default function VehiculosPage() {
             {/* Histórico DataTable */}
             <div className="glass-card overflow-hidden">
                 <div className="p-5 border-b border-slate-700/50 bg-slate-800/20 flex items-center gap-2">
-                    <History className="text-slate-400 w-5 h-5" />
-                    <h3 className="font-semibold text-slate-200">Últimos 50 Movimientos</h3>
+                    <Truck className="text-slate-400 w-5 h-5" />
+                    <h3 className="font-semibold text-slate-200">Vehículos Concurrentes Registrados</h3>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm text-slate-300">

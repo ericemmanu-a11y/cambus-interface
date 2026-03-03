@@ -18,6 +18,7 @@ export default function CamarasPage() {
     const [user, setUser] = useState<any>(null);
 
     const [showModal, setShowModal] = useState(false);
+    const [viewingCam, setViewingCam] = useState<Camara | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         id_camara: 0,
@@ -157,13 +158,21 @@ export default function CamarasPage() {
 
                             {user?.rol === 'admin' && (
                                 <div className="flex gap-2">
-                                    <button onClick={() => openEditModal(cam)} className="p-2 text-slate-400 hover:text-blue-400 bg-slate-800/50 rounded-lg hover:bg-blue-500/10 transition-colors">
+                                    <button onClick={() => setViewingCam(cam)} className="p-2 text-slate-400 hover:text-emerald-400 bg-slate-800/50 rounded-lg hover:bg-emerald-500/10 transition-colors" title="Ver Feed LPR">
+                                        <MonitorPlay className="w-4 h-4" />
+                                    </button>
+                                    <button onClick={() => openEditModal(cam)} className="p-2 text-slate-400 hover:text-blue-400 bg-slate-800/50 rounded-lg hover:bg-blue-500/10 transition-colors" title="Configurar">
                                         <Pencil className="w-4 h-4" />
                                     </button>
-                                    <button onClick={() => handleDelete(cam.id_camara)} className="p-2 text-slate-400 hover:text-red-400 bg-slate-800/50 rounded-lg hover:bg-red-500/10 transition-colors">
+                                    <button onClick={() => handleDelete(cam.id_camara)} className="p-2 text-slate-400 hover:text-red-400 bg-slate-800/50 rounded-lg hover:bg-red-500/10 transition-colors" title="Desconectar">
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
+                            )}
+                            {user?.rol !== 'admin' && (
+                                <button onClick={() => setViewingCam(cam)} className="p-2 border border-emerald-500/30 text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 rounded-lg hover:bg-emerald-500/20 transition-colors text-xs font-bold flex items-center gap-1" title="Visualizar Panel">
+                                    <MonitorPlay className="w-3 h-3" /> VER FEED
+                                </button>
                             )}
                         </div>
 
@@ -236,6 +245,58 @@ export default function CamarasPage() {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal - Reproductor de Video Simulado LPR */}
+            {viewingCam && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+                    <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 relative">
+
+                        {/* Header del Feed */}
+                        <div className="bg-slate-800/80 px-4 py-3 border-b border-slate-700 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div>
+                                <span className="font-mono text-sm tracking-widest text-slate-200">LIVE: {viewingCam.nombre_camara}</span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <span className="text-xs text-slate-400 font-mono hidden sm:inline-block">IP: {viewingCam.ip_local} ({viewingCam.estado})</span>
+                                <button onClick={() => setViewingCam(null)} className="text-slate-400 hover:text-white transition-colors bg-slate-800 px-3 py-1 rounded border border-slate-700">
+                                    Cerrar Visor
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Player Frame */}
+                        <div className="relative aspect-video bg-black w-full flex items-center justify-center overflow-hidden">
+                            {viewingCam.estado === 'activa' ? (
+                                <>
+                                    {/* Lineas Analíticas */}
+                                    <div className="absolute inset-0 bg-[linear-gradient(rgba(20,20,30,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,30,0.5)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
+                                    <div className="w-full h-1 bg-emerald-500/30 absolute opacity-50 z-10 bottom-full animate-[scanline_4s_linear_infinite]" style={{ boxShadow: '0 0 15px rgba(16, 185, 129, 0.4)' }}></div>
+                                    <style>{`
+                                        @keyframes scanline { 0% { bottom: 100%; top: 0; } 100% { bottom: 0; top: 100%; } }
+                                    `}</style>
+
+                                    {/* Overlay Data */}
+                                    <div className="absolute top-4 right-4 text-emerald-400 font-mono text-xs text-right opacity-70">
+                                        <p>OCR ENGINE: V2.4 RUNNING</p>
+                                        <p>CONFIDENCE THRESHOLD: 98%</p>
+                                        <p>FPS: 30.01</p>
+                                        <p className="mt-2 text-rose-400">WAITING FOR OBJECT...</p>
+                                    </div>
+
+                                    <span className="text-slate-600 font-mono text-sm tracking-widest">[ NO MOTION DETECTED ON TRACK: {viewingCam.ubicacion} ]</span>
+                                </>
+                            ) : (
+                                <div className="text-center">
+                                    <AlertTriangle className="w-12 h-12 text-slate-600 mx-auto mb-2" />
+                                    <p className="text-slate-500 font-mono text-sm">NO SIGNAL DETECTED</p>
+                                    <p className="text-slate-600 font-mono text-xs mt-1">Check network route to {viewingCam.ip_local}</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

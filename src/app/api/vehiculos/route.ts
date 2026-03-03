@@ -48,9 +48,8 @@ export async function POST(req: Request) {
         if (evento === 'entrada') {
             await client.query(`
                 INSERT INTO registros_vehiculos 
-                (placa, id_anden, id_camara, evento, confianza_placa, hash_imagen)
-                VALUES ($1, $2, (SELECT id_camara FROM andenes WHERE id_anden = $2 LIMIT 1), 
-                        'entrada', 99.9, encode(digest('registro_manual_' || $1 || extract(epoch from now())::text, 'sha256'), 'hex'))
+                (placa, id_anden, evento, confianza_placa, hash_imagen)
+                VALUES ($1, $2, 'entrada', 99.9, encode(digest('registro_manual_' || $1 || extract(epoch from now())::text, 'sha256'), 'hex'))
             `, [placa, id_anden]);
         }
         // Si es salida, actualizamos el registro que estaba "abierto" en ese andén
@@ -64,9 +63,8 @@ export async function POST(req: Request) {
             // Insertamos un evento de salida para la tabla como historial nuevo también (replicando comportamiento real logs)
             await client.query(`
                 INSERT INTO registros_vehiculos 
-                (placa, id_anden, id_camara, evento, confianza_placa, hash_imagen)
-                VALUES ($1, $2, (SELECT id_camara FROM andenes WHERE id_anden = $2 LIMIT 1), 
-                        'salida', 99.9, encode(digest('registro_manual_salida_' || $1 || extract(epoch from now())::text, 'sha256'), 'hex'))
+                (placa, id_anden, evento, confianza_placa, hash_imagen)
+                VALUES ($1, $2, 'salida', 99.9, encode(digest('registro_manual_salida_' || $1 || extract(epoch from now())::text, 'sha256'), 'hex'))
             `, [placa, id_anden]);
         }
 

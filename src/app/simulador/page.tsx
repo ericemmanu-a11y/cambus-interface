@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Radar, Truck, Activity, Database } from 'lucide-react';
+import { Camera, Truck, Activity, Database, LayoutTemplate } from 'lucide-react';
 
 interface SimulatorTruck {
     id: string;
@@ -136,119 +136,146 @@ export default function SimulatorPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-emerald-400 font-mono p-6 overflow-hidden relative">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans p-2 overflow-hidden relative transition-colors duration-300">
             {/* Background sweep radar effect CSS */}
             <style dangerouslySetInnerHTML={{
                 __html: `
-                @keyframes radar-sweep {
-                  from { transform: rotate(0deg); }
-                  to { transform: rotate(360deg); }
-                }
-                .radar-line {
-                  position: absolute;
-                  top: 50%; left: 50%;
-                  width: 70vw; height: 2px;
-                  background: linear-gradient(90deg, rgba(2,6,23,0), rgba(52, 211, 153, 0.8));
-                  transform-origin: left center;
-                  animation: radar-sweep 6s linear infinite;
-                  pointer-events: none;
-                  z-index: 0;
-                }
-                .grid-bg {
-                  background-size: 50px 50px;
+                .bg-pattern {
+                  background-color: #f1f5f9;
                   background-image: 
-                    linear-gradient(to right, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+                    linear-gradient(rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+                  background-size: 20px 20px;
+                }
+                .dark .bg-pattern {
+                  background-color: #0f172a;
+                  background-image: 
+                    linear-gradient(rgba(30, 41, 59, 0.5) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(30, 41, 59, 0.5) 1px, transparent 1px);
+                }
+                .scanline {
+                  width: 100%;
+                  height: 10px;
+                  background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(0,0,0,0) 100%);
+                  opacity: 0.1;
+                  position: absolute;
+                  bottom: 100%;
+                  animation: scanline 8s linear infinite;
+                }
+                @keyframes scanline {
+                  0% { bottom: 100%; }
+                  100% { bottom: -10px; }
                 }
             `}} />
-            <div className="absolute inset-0 grid-bg z-0 pointer-events-none"></div>
-            <div className="radar-line opacity-30"></div>
+            <div className="absolute inset-0 bg-pattern z-0"></div>
 
-            <header className="flex items-center justify-between mb-8 border-b border-emerald-900/50 pb-4 relative z-10 bg-slate-950/50 p-4 rounded-xl backdrop-blur-md shadow-lg shadow-emerald-900/10">
-                <div className="flex items-center gap-4">
-                    <div className="p-3 bg-emerald-950 rounded-lg border border-emerald-800">
-                        <Radar className="w-8 h-8 animate-spin-slow text-emerald-400" style={{ animationDuration: '4s' }} />
+            <header className="flex items-center justify-between mb-8 pb-4 relative z-10 glass-card mx-auto max-w-7xl mt-4 px-6 border-slate-200/50 dark:border-slate-800/50 isolate">
+                <div className="flex items-center gap-4 py-2">
+                    <div className="p-3 bg-blue-100 dark:bg-slate-900 rounded-lg border border-blue-200 dark:border-slate-800 shadow-sm">
+                        <Camera className="w-8 h-8 text-blue-600 dark:text-blue-500" />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold tracking-widest text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">RADAR IoT LOGÍSTICO</h1>
-                        <p className="text-xs text-emerald-600 tracking-wider">GEMELO DIGITAL (SIMULADOR 2D)</p>
+                        <h1 className="text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">CÁMARAS LPR - TEST HUB</h1>
+                        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 tracking-wider">ENTORNO DE SIMULACIÓN Y PRUEBAS</p>
                     </div>
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                    <div className="flex items-center gap-2 text-xs font-bold bg-emerald-950/60 shadow-[0_0_10px_rgba(52,211,153,0.2)] px-4 py-2 rounded-full border border-emerald-700/50 text-emerald-300">
-                        <Database className="w-4 h-4" /> POSTGRESQL [CONECTADO]
+                <div className="flex flex-col items-end gap-2 text-right">
+                    <div className="flex items-center gap-2 text-xs font-bold  px-4 py-2 rounded-full border border-emerald-200 bg-emerald-50 dark:border-emerald-900/50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400">
+                        <Database className="w-4 h-4" /> POSTGRESQL CONECTADO
                     </div>
-                    <p className="text-[10px] text-emerald-600/60">SIMULANDO INSERCIONES DE CUSTODIA SHA-256</p>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-500 font-medium">SIMULANDO INSERCIONES DE CUSTODIA (R-100)</p>
                 </div>
             </header>
 
-            {/* Grid of Andenes */}
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 relative z-10 h-[65vh] max-w-7xl mx-auto overflow-y-auto p-4 custom-scrollbar bg-slate-900/40 rounded-xl border border-emerald-900/30">
-                {andenes.map(anden => {
-                    const myTruck = trucks.find(t => t.anden === anden);
-                    return (
-                        <div key={anden} className="flex flex-col items-center justify-end border-x-2 border-t-2 border-emerald-900/30 bg-slate-900/60 rounded-t-2xl relative overflow-hidden backdrop-blur-md h-[400px]">
+            <main className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10 max-w-7xl mx-auto h-[70vh]">
+                {/* Visual Camera Feed */}
+                <div className="lg:col-span-2 glass-card rounded-2xl overflow-hidden flex flex-col relative border-slate-200/50 dark:border-slate-700/50 shadow-md">
+                    <div className="h-12 border-b border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/50 flex items-center px-4 justify-between">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
+                            <span className="text-xs font-bold tracking-widest text-slate-600 dark:text-slate-300">LIVE FEED OCR</span>
+                        </div>
+                        <span className="text-xs font-mono text-slate-500">{new Date().toISOString().split('T')[0]}</span>
+                    </div>
+                    <div className="flex-1 bg-slate-900 relative overflow-hidden flex items-center justify-center p-4">
+                        <div className="scanline"></div>
 
-                            {/* Truck moving div */}
-                            {myTruck && (
-                                <div
-                                    className={`absolute w-24 h-36 border-2 flex flex-col items-center justify-center transition-all duration-100 z-20 rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.5)]
-                                 ${myTruck.state === 'error' ? 'bg-red-950 border-red-500 text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.4)]' :
-                                            myTruck.state === 'docked' ? 'bg-emerald-950 border-emerald-400 text-emerald-300 shadow-[0_0_20px_rgba(52,211,153,0.4)]' :
-                                                'bg-slate-800 border-emerald-600 text-emerald-500'}`}
-                                    style={{
-                                        bottom: `${Math.max(10, 100 - myTruck.progress)}%`,
-                                        opacity: myTruck.state === 'docking' ? 0.9 : 1
-                                    }}
-                                >
-                                    <Truck className={`w-10 h-10 mb-2 ${myTruck.state === 'incoming' ? 'animate-bounce' : ''}`} />
+                        <div className="w-full h-full relative border border-slate-800 rounded-lg overflow-hidden bg-black/40 flex flex-wrap gap-2 p-4 content-start custom-scrollbar overflow-y-auto">
+                            {/* Visual Boxes for "Detected Trucks" */}
+                            <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10">
+                                <Truck className="w-64 h-64 text-slate-500" />
+                            </div>
 
-                                    {myTruck.state === 'docking' && <span className="text-[10px] animate-pulse font-bold">ENLAZANDO DB...</span>}
-                                    {myTruck.state === 'error' && <span className="text-xs font-bold bg-red-900 px-2 py-1 rounded">ERROR DB</span>}
+                            {andenes.filter(a => trucks.find(t => t.anden === a)).map(anden => {
+                                const myTruck = trucks.find(t => t.anden === anden);
+                                if (!myTruck) return null;
 
-                                    {myTruck.state === 'docked' && (
-                                        <div className="text-center w-full px-1">
-                                            <div className="text-sm font-extrabold text-white bg-emerald-800 px-1 py-0.5 rounded shadow-inner truncate">{myTruck.placa}</div>
-                                            <div className="text-[8px] text-emerald-500 mt-1 truncate px-1 opacity-70">HASH OK</div>
+                                return (
+                                    <div key={anden} className={`relative z-10 w-40 p-3 rounded-lg border-2 backdrop-blur-md transition-all ${myTruck.state === 'error' ? 'border-rose-500 bg-rose-950/50 text-rose-200' :
+                                            myTruck.state === 'docked' ? 'border-emerald-500 bg-emerald-950/50 text-emerald-200' :
+                                                'border-blue-500 bg-blue-950/50 text-blue-200'
+                                        }`}>
+                                        <div className="flex justify-between items-start mb-2 border-b border-inherit pb-1">
+                                            <span className="text-xs font-bold font-mono">CH-{anden.toString().padStart(3, '0')}</span>
+                                            {myTruck.state === 'docking' && <Activity className="w-3 h-3 animate-spin" />}
                                         </div>
-                                    )}
+
+                                        <div className="space-y-1">
+                                            {myTruck.state === 'incoming' && <p className="text-[10px] uppercase font-bold text-center py-2 animate-pulse">Detecting...</p>}
+                                            {(myTruck.state === 'docking' || myTruck.state === 'docked' || myTruck.state === 'error') && (
+                                                <div className="font-mono text-center">
+                                                    <div className="font-bold tracking-widest text-sm bg-black/40 py-1 rounded border border-inherit">
+                                                        {myTruck.placa || '???-???'}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {myTruck.state === 'error' && <p className="text-[9px] text-center mt-1 uppercase font-bold text-rose-400">DB Error</p>}
+                                            {myTruck.state === 'docked' && <p className="text-[8px] text-center mt-1 text-emerald-400 opacity-80 truncate">{myTruck.hash}</p>}
+                                        </div>
+
+                                        {/* Progress bar visualizer */}
+                                        {myTruck.state === 'incoming' && (
+                                            <div className="w-full bg-slate-800 rounded-full h-1 mt-2 overflow-hidden">
+                                                <div className="bg-blue-500 h-1 transition-all" style={{ width: `${myTruck.progress}%` }}></div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )
+                            })}
+
+                            {trucks.length === 0 && (
+                                <div className="absolute inset-0 flex items-center justify-center font-mono text-sm text-slate-600">
+                                    [ WAITING FOR MOTION DETECTION ]
                                 </div>
                             )}
 
-                            {/* Anden Base Slot */}
-                            <div className="w-full h-12 border-t border-emerald-800/80 bg-emerald-950/80 flex items-center justify-center z-30 relative shadow-[0_-5px_15px_rgba(0,0,0,0.3)]">
-                                <span className={`font-bold tracking-widest text-sm shadow-black drop-shadow-md
-                                   ${myTruck?.state === 'docked' ? 'text-white' : 'text-emerald-600'}`}>
-                                    ANDÉN {anden}
-                                </span>
-                            </div>
                         </div>
-                    )
-                })}
-            </div>
+                    </div>
+                </div>
 
-            {/* Terminal Logs Container */}
-            <div className="mt-8 bg-[#0a0f1c] border-2 border-emerald-900/50 rounded-xl p-5 h-56 mx-auto relative z-10 font-mono text-sm leading-relaxed backdrop-blur-2xl shadow-[inset_0_0_30px_rgba(0,0,0,0.8)] flex flex-col-reverse">
-                <div className="overflow-y-auto flex flex-col-reverse relative">
-                    {logs.map((L, i) => (
-                        <div key={i} className={`flex gap-3 mb-1 ${i === 0 ? 'opacity-100' : 'opacity-70'}`}>
-                            <span className="text-emerald-700/80 shrink-0">[{new Date().toLocaleTimeString()}]</span>
-                            <span className={`
-                                ${L.includes('ERROR') || L.includes('CRITICAL') ? 'text-red-400 font-bold' :
-                                    L.includes('Exitoso') ? 'text-emerald-300 font-semibold' :
-                                        L.includes('SALIDA') ? 'text-amber-400/80' :
-                                            'text-emerald-500/80'}
-                            `}>{L}</span>
+                {/* Right side Log Panel */}
+                <div className="glass-card flex flex-col rounded-2xl overflow-hidden border-slate-200/50 dark:border-slate-700/50 shadow-md">
+                    <div className="h-12 border-b border-slate-200 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900/50 flex items-center px-4">
+                        <h3 className="text-xs font-bold tracking-widest text-slate-600 dark:text-slate-300">OUTPUT LOG</h3>
+                    </div>
+                    <div className="flex-1 p-4 bg-slate-50 dark:bg-slate-950/50 overflow-y-auto custom-scrollbar flex flex-col-reverse relative text-xs">
+                        <div className="flex flex-col-reverse gap-2 font-mono">
+                            {logs.map((L, i) => (
+                                <div key={i} className={`pb-2 border-b border-slate-200 dark:border-slate-800/50 last:border-0 ${i === 0 ? 'opacity-100' : 'opacity-70'}`}>
+                                    <span className="text-slate-400 dark:text-slate-600 block text-[10px] mb-0.5">[{new Date().toLocaleTimeString()}]</span>
+                                    <span className={`leading-relaxed
+                                        ${L.includes('ERROR') || L.includes('CRITICAL') ? 'text-rose-600 dark:text-rose-400 font-bold' :
+                                            L.includes('Exitoso') ? 'text-emerald-600 dark:text-emerald-400 font-semibold' :
+                                                L.includes('SALIDA') ? 'text-amber-600 dark:text-amber-400/90' :
+                                                    'text-slate-700 dark:text-blue-300'}
+                                    `}>{L}</span>
+                                </div>
+                            ))}
+                            {logs.length === 0 && <div className="text-slate-400 text-center py-8">No events logged.</div>}
                         </div>
-                    ))}
-                    {logs.length === 0 && <div className="text-emerald-800 animate-pulse mt-auto">A LA ESCUCHA DE TRÁFICO LOGÍSTICO...</div>}
+                    </div>
                 </div>
-                <div className="absolute top-0 right-0 p-3 flex gap-2">
-                    <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                    <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse delay-75"></div>
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse delay-150"></div>
-                </div>
-            </div>
+            </main>
         </div>
     );
 }

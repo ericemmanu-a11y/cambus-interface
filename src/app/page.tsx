@@ -104,13 +104,19 @@ export default function Dashboard() {
 
       {/* Header section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tight">
-            Sistema <span className="text-gradient">Cambus</span>
-          </h1>
-          <p className="text-slate-400 mt-2 text-lg">
-            Monitorización en tiempo real de andenes y vehículos
-          </p>
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)] p-1 hidden sm:flex">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="CamBus Logo" className="w-full h-full object-contain" onError={(e) => { e.currentTarget.style.display = 'none' }} />
+          </div>
+          <div>
+            <h1 className="text-4xl font-black tracking-tight font-sans">
+              Sistema <span className="text-gradient">CamBus</span>
+            </h1>
+            <p className="text-slate-400 mt-1 font-medium text-lg">
+              Monitorización en tiempo real de andenes y vehículos
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">

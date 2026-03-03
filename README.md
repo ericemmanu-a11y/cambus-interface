@@ -35,15 +35,23 @@ Hemos encapsulado toda la estructura, usuarios y datos semilla en un único arch
 2. Cópialo y ejecútalo mediante la consola Query o PgAdmin.
    * *El script es autosuficiente: automáticamente creará la arquitectura, los 3 roles limitados de acceso, los triggers, las vistas y añadirá vehículos y andenes de prueba.*
 
-### 2. Instalación del Entorno Frontend
+### 2. Instalación del Entorno Frontend (Nuevo Sistema Rápido)
+
+Hemos añadido un script automatizado para la instalación de este servidor y su despliegue para producción:
 
 Abre la terminal de comandos (cmd o powershell) en la carpeta del código fuente de este proyecto:
 
 ```bash
+# Ejecutar instalador automatizado
+.\setup.ps1
+```
+
+O si prefieres instalación manual (En caso de fallo de permisos en PS1):
+```bash
 # 1. Instalar las dependencias de React/Next.js
 npm install
 
-# 2. Iniciar el servidor web local
+# 2. Iniciar el servidor web local para evaluación
 npm run dev
 ```
 
@@ -58,15 +66,15 @@ npm run dev
 | **Supervisor** | `supervisor1@cambus.local` | `Sup3rv1sor!` |
 | **Operador** | (Crear uno nuevo manualmente) | `cambus_oper_123` |
 
-### 4. Extra: Ejecutar el Simulador Inteligente en Segundo Plano
+### 4. Extra: Ejecutar el Simulador Inteligente de Cámaras en Segundo Plano
 
-Para evaluar el sistema en **"Tiempo Real"** como si estuviera en la vida real, el proyecto incluye un Robot (*Daemon*) que genera tráfico logístico (vehículos entrando y saliendo) en el fondo. 
+Para evaluar el sistema en **"Tiempo Real"** como si estuviera en la vida real, el proyecto incluye un Hub Testing (*Daemon*) que envía tráfico OCR/LPR logístico al dashboard en el fondo y puebla la base de datos de manera automatizada. 
 Para activarlo, abre **otra pestaña de terminal** (distinta a la que está corriendo `npm run dev`), sitúate en la carpeta de este proyecto y ejecuta:
 
 ```bash
 npm run daemon
 ```
-*Si tienes este comando corriendo, podrás navegar por el sistema web en el navegador y verás cómo los números del tablero central cambian por sí solos.*
+*Si tienes este comando corriendo, podrás navegar por el sistema web en la pestaña **Dashboard** y **Simulador** en el navegador y verás los datos de "Cámaras" en vivo registrando en su Base de datos.*
 
 ---
 **Desarrollado para Entrega Final.**
